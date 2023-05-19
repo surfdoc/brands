@@ -93,7 +93,7 @@
     "permission-offline",
     "health-cards"
   ],
-  "patientAccessBrandBundle": "https://fhir.meditech.com/brands.json",
+  "patientAccessBrandBundle": "https://serve-basket.s3.us-east-2.amazonaws.com/Brands.json",
   "patientAccessPrimaryBrandIdentifier": {
     "value": "https://example.org"
   }
