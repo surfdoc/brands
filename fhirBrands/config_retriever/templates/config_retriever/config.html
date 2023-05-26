@@ -1,0 +1,128 @@
+{% for entry, value in data.items %}
+    <hr style="border-top: 4px solid #808080;"/>
+    <h2>Organization Name: {{ value.name }}</h2>
+    {% for e in value.telecom %}
+        {% if e.system == 'url' %}
+            <p>Organization Website: {{ e.value }}</p>
+        {% endif %}
+    {% endfor %}
+    {% for e in value.extension %}
+        {% if "http://hl7.org/fhir/smart-app-launch/StructureDefinition/brand-logo" == e.url %}
+            <p>Organization Logo: </p> 
+            <p><img src="{{ e.valueUrl }}" alt="Logo" width="50"></p>
+        {% endif %}
+        {% if "http://hl7.org/fhir/smart-app-launch/StructureDefinition/brand-logo-use-agreement-agreement" == e.url %}
+            <p>Organization Logo Terms of Use: {{ e.valueUrl }}</p>
+        {% endif %}
+        {% if "http://hl7.org/fhir/smart-app-launch/StructureDefinition/patient-access-name" == e.url %}
+            <p>Patient Portal: {{ e.valueString }}</p>
+        {% endif %}
+        {% if "http://hl7.org/fhir/smart-app-launch/StructureDefinition/patient-access-url" == e.url %}
+            <p>Patient Portal Website: {{ e.valueUrl }}</p>
+        {% endif %}
+        {% if "http://hl7.org/fhir/smart-app-launch/StructureDefinition/patient-access-description" == e.url %}
+            <p>Patient Portal Description: {{ e.valueMarkdown }}</p>
+        {% endif %}
+    {% endfor %}
+    {% for a in value.address %}
+        {% for line in a.line %}
+            <p>Organization Address: </p>
+            <ul>
+                <li>Line: {{ line }}</li>
+                <li>City: {{ a.city }}</li>
+                <li>State: {{ a.state }}</li>
+                <li>Postal Code: {{ a.postalCode }}</li>
+            </ul>
+        {% endfor %}
+        {% if a.extension %}
+            {% for extension in a.extension %}
+                {% if 'nearby-zip-codes' in extension.url %}
+                    <p>Service Zip Codes: {{ extension.valueString }}</p>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+    {% for type in value.type %}
+        {% for code in type.coding %}
+            {% if "http://hl7.org/fhir/smart-app-launch/CodeSystem/patient-access-category" in code.system %}
+                <p>Organization Facility Type: {{ code.code }}</p>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    {% if value.endpoint %}
+        {% if value.endpoint.uri %}
+            <p>Base URI: {{ value.endpoint.uri }}</p>
+        {% endif %}
+        {% if value.endpoint.status %}
+            <p>Endpoint Status: {{ value.endpoint.status }}</p>
+        {% endif %}
+        {% for ext in value.endpoint.extensions %}
+            <p>Endpoint FHIR Version: {{ ext.valueCode }}</p>
+        {% endfor %}
+    {% endif %}
+    {% if value.sites %}
+        {% for site, info in value.sites.items %}
+            <hr/>
+            <h3 style="color: blue;">Site Name: {{ info.name }}</h3>
+            {% for e in info.telecom %}
+                {% if e.system == 'url' %}
+                    <p style="color: blue;">Site Website: {{ e.value }}"</p>
+                {% endif %}
+            {% endfor %}
+            {% for e in info.extension %}
+                {% if "http://hl7.org/fhir/smart-app-launch/StructureDefinition/brand-logo" == e.url %}
+                    <p style="color: blue;">Site Logo: </p>
+                    <p><img src="{{ e.valueUrl }}" alt="Logo" width="50"></p>
+                {% endif %}
+                {% if "http://hl7.org/fhir/smart-app-launch/StructureDefinition/brand-logo-use-agreement-agreement" == e.url %}
+                    <p style="color: blue;">Site Logo Terms of Use: {{ e.valueUrl }}</p>
+                {% endif %}
+                {% if "http://hl7.org/fhir/smart-app-launch/StructureDefinition/patient-access-name" == e.url %}
+                    <p style="color: blue;">Patient Portal: {{ e.valueString }}</p>
+                {% endif %}
+                {% if "http://hl7.org/fhir/smart-app-launch/StructureDefinition/patient-access-url" == e.url %}
+                    <p style="color: blue;">Patient Portal Website: {{ e.valueUrl }}</p>
+                {% endif %}
+                {% if "http://hl7.org/fhir/smart-app-launch/StructureDefinition/patient-access-description" == e.url %}
+                    <p style="color: blue;">Patient Portal Description: {{ e.valueMarkdown }}</p>
+                {% endif %}
+            {% endfor %}
+            {% for a in info.address %}
+                {% for line in a.line %}
+                    <p style="color: blue;">Site Address: </p>
+                    <ul>
+                        <li style="color: blue;">Line: {{ line }}</li>
+                        <li style="color: blue;">City: {{ a.city }}</li>
+                        <li style="color: blue;">State: {{ a.state }}</li>
+                        <li style="color: blue;">Postal Code: {{ a.postalCode }}</li>
+                    </ul>
+                {% endfor %}
+                {% if a.extension %}
+                    {% for extension in a.extension %}
+                        {% if 'nearby-zip-codes' in extension.url %}
+                            <p style="color: blue;">Service Zip Codes: {{ extension.valueString }}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+            {% for type in info.type %}
+                {% for code in type.coding %}
+                    {% if "http://hl7.org/fhir/smart-app-launch/CodeSystem/patient-access-category" == code.system %}
+                        <p style="color: blue;">Site Facility Type: {{ code.code }}</p>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+            {% if info.endpoint %}
+                {% if info.endpoint.uri %}
+                    <p style="color: blue;">Base URI: {{ info.endpoint.uri }}</p>
+                {% endif %}
+                {% if info.endpoint.status %}
+                    <p style="color: blue;">Endpoint Status: {{ info.endpoint.status }}</p>
+                {% endif %}
+                {% for ext in info.endpoint.extensions %}
+                    <p style="color: blue;">Endpoint FHIR Version: {{ ext.valueCode }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endfor %}

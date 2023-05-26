@@ -1,0 +1,27 @@
+{% block content %}
+  <h1>Branding Entries</h1>
+  {% for entry in entries %}
+    <div>
+      <h3>{{ entry.resource.resourceType }} ID: {{ entry.resource.id }}</h3>
+      <ul>
+        {% for extension in entry.resource.extension %}
+          <li>
+            <h4>{{ extension.url }}:</h4>
+            {% if 'image/svg+xml' in extension.valueUrl %}
+              <p><img src="{{ extension.valueUrl }}" alt="Logo" width="50">
+            {% else %}
+              {{ extension.valueUrl }}</p>
+            {% endif %}
+            {% if extension.url == "http://fhir.org/argonaut/StructureDefinition/endpoint-fhir-version" %}
+                {{ extension.valueCode}}
+            {% endif %}
+            {% if extension.url == "http://fhir.org/argonaut/StructureDefinition/patient-access-name" %}
+            {{ extension.valueString}}
+            {% endif %}
+
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endfor %}
+{% endblock %}
