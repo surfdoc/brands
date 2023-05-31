@@ -93,7 +93,7 @@
     "permission-offline",
     "health-cards"
   ],
-  "patientAccessBrandBundle": "https://serve-basket.s3.us-east-2.amazonaws.com/SMART-Brands.json",
+  "patientAccessBrandBundle": "https://gist.github.com/Arkitechtual/a78fd625dc58157d0653aa75164633ed/raw/e5e13dfcd70d85fb814a7fbe9cf0511c24a358ab/brands_sample.json",
   "patientAccessPrimaryBrandIdentifier": {
     "value": "https://example.org"
   }
